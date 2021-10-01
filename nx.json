@@ -29,6 +29,12 @@
   "projects": {
     "api": {
       "tags": []
+    },
+    "html": {
+      "tags": []
+    },
+    "todos": {
+      "tags": []
     }
   }
 }

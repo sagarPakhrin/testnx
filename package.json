@@ -12,6 +12,8 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "axios": "^0.22.0",
+    "hbs": "^4.1.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0"
@@ -24,7 +26,7 @@
     "@nrwl/jest": "12.9.0",
     "@nrwl/linter": "12.9.0",
     "@nrwl/nest": "12.9.0",
-    "@nrwl/node": "12.9.0",
+    "@nrwl/node": "^12.9.0",
     "@nrwl/tao": "12.9.0",
     "@nrwl/workspace": "12.9.0",
     "@types/jest": "26.0.24",
