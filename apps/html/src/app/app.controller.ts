@@ -19,6 +19,7 @@ export class AppController {
       const response = await axios.get<Todo[]>(
         process.env.apiPath || 'http://localhost:3333'
       );
+      console.log('only api changed');
       return response.data;
     } catch (e) {
       console.error(e);
