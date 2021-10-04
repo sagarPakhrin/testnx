@@ -119,7 +119,7 @@
           "options": {
             "commands": [
               "nx build html",
-              "docker build -f ./apps/html/Dockerfile . -t html"
+              "docker build -f ./apps/html/Dockerfile -t {args.dockerTag} -t html ."
             ],
             "parallel": false
           }
