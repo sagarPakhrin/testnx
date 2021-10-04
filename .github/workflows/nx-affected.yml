@@ -34,4 +34,6 @@ jobs:
       - run: git fetch --no-tags --prune --depth=1 origin main
       - run: yarn install
       - run: yarn nx run-many --target=deploy --all --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+      - run: |
+          gcloud auth configure-docker -q
       - run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
