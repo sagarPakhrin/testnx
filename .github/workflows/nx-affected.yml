@@ -33,5 +33,5 @@ jobs:
           export_default_credentials: true
       - run: git fetch --no-tags --prune --depth=1 origin main
       - run: yarn install
-      - run: yarn nx affected --target=deploy --base=origin/main --prod --parallel
+      - run: yarn nx affected --target=deploy --base=origin/main --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
       - run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
