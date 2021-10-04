@@ -56,7 +56,8 @@
           "options": {
             "commands": [
               "nx build api",
-              "docker build -f ./apps/api/Dockerfile . -t {args.dockerTag} -t api"
+              "echo {args.dockerTag}, as argument",
+              "docker build -f ./apps/api/Dockerfile -t {args.dockerTag} -t api ."
             ],
             "parallel": false
           }
