@@ -55,6 +55,7 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
+              "nx clear-cache",
               "nx build api",
               "echo {args.dockerTag}, as argument",
               "docker build -f ./apps/api/Dockerfile -t {args.dockerTag}api:${args.hash} .",
@@ -119,6 +120,7 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
+              "nx clear-cache",
               "nx build html",
               "docker build -f ./apps/html/Dockerfile -t {args.dockerTag}frontend:${args.hash} .",
               "docker push {args.dockerTag}frontend:${args.hash}"
