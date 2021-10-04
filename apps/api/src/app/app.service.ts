@@ -7,6 +7,8 @@ export class AppService {
     return [
       { message: 'Take out trash', done: false },
       { message: 'Continue using Nx', done: false },
+      { message: 'Setup nx and docker', done: true },
+      { message: 'Api is modified', done: false },
     ];
   }
 }
