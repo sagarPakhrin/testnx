@@ -32,7 +32,7 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           export_default_credentials: true
       - run: git fetch --no-tags --prune --depth=1 origin main
-      - run: echo $project_id
+      - run: echo ${{ secrets.GCR_DEVOPS_SERVICE_ACCOUNT_KEY }}
       - run: yarn install
       - run: yarn nx affected --target=deploy --base=origin/main --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
       - run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
