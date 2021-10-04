@@ -57,7 +57,7 @@
             "commands": [
               "nx build api",
               "echo {args.dockerTag}, as argument",
-              "docker build -f ./apps/api/Dockerfile -t {args.dockerTag}api:${args.hash} -t api .",
+              "docker build -f ./apps/api/Dockerfile -t {args.dockerTag}api:${args.hash} .",
               "docker push {args.dockerTag}api:${args.hash}"
             ],
             "parallel": false
@@ -120,7 +120,7 @@
           "options": {
             "commands": [
               "nx build html",
-              "docker build -f ./apps/html/Dockerfile -t {args.dockerTag}frontend:${args.hash} -t html .",
+              "docker build -f ./apps/html/Dockerfile -t {args.dockerTag}frontend:${args.hash} .",
               "docker push {args.dockerTag}frontend:${args.hash}"
             ],
             "parallel": false
