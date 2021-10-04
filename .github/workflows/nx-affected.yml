@@ -27,6 +27,7 @@ jobs:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
     steps:
+      - uses: AutoModality/action-clean@v1
       - name: Checkout
         uses: actions/checkout@v2
         with:
