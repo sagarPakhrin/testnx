@@ -14,9 +14,14 @@ describe('AppController', () => {
   });
 
   describe('getData', () => {
+    const mockResponse = [
+      { done: false, message: 'Take out trash' },
+      { done: false, message: 'Continue using Nx' },
+      { done: true, message: 'Setup nx and docker' },
+    ];
     it('should return "Welcome to api!"', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.getData()).toEqual({ message: 'Welcome to api!' });
+      expect(appController.getData()).toEqual(mockResponse);
     });
   });
 });
