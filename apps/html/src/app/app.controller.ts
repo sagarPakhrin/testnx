@@ -19,6 +19,7 @@ export class AppController {
 
   async getData() {
     try {
+      const t = await axios.get(process.env.apiPath || 'http://localhost:3333');
       const response = await this.httpService
         .get<Todo[]>(process.env.apiPath || 'http://localhost:3333')
         .toPromise();
