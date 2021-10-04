@@ -17,8 +17,20 @@ jobs:
       - run: yarn nx affected --target=lint --base=origin/main --parallel
   build:
     runs-on: ubuntu-latest
+    env:
+      HASH: $(git rev-parse --short "$GITHUB_SHA")
+      BRANCH: ${GITHUB_REF##*/}
+      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --no-tags --prune --depth=1 origin main
       - run: yarn install
-      - run: yarn nx run-many --target=deploy --base=origin/main --parallel --all
+      - run: yarn nx affected --target=deploy --base=origin/main --prod --parallel
+      - run: echo $PROJECT_ID
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCR_DEVOPS_SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          export_default_credentials: true
+      - run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
