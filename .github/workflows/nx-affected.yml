@@ -35,4 +35,4 @@ jobs:
       - run: |
           gcloud auth configure-docker -q
       - run: yarn install
-      - run: yarn nx run-many --target=deploy --all --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/ --hash=$HASH
+      - run: yarn nx affected --base=origin/main --target=deploy  --all --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/ --hash=$(git rev-parse --short "$GITHUB_SHA")
