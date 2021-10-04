@@ -118,7 +118,11 @@
         "deploy": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
-            "commands": [],
+            "commands": [
+              "nx build html",
+              "docker build -f ./apps/html/Dockerfile -t {args.dockerTag}frontend:${args.hash} .",
+              "docker push {args.dockerTag}frontend:${args.hash}"
+            ],
             "parallel": false
           }
         }
