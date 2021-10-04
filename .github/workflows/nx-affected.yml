@@ -21,7 +21,7 @@ jobs:
       HASH: $(git rev-parse --short "$GITHUB_SHA")
       BRANCH: ${GITHUB_REF##*/}
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      PROJECT_ID: '${{ secrets.PROJECT_ID }}'
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           export_default_credentials: true
       - run: git fetch --no-tags --prune --depth=1 origin main
-      - run: echo ${{ secrets.GCR_DEVOPS_SERVICE_ACCOUNT_KEY }}
+      - run: echo ${{ secrets}}
       - run: yarn install
       - run: yarn nx affected --target=deploy --base=origin/main --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
       - run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
