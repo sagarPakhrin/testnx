@@ -33,7 +33,8 @@
         "serve": {
           "executor": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "api:build"
+            "buildTarget": "api:build",
+            "inspect": true
           }
         },
         "lint": {
@@ -97,7 +98,8 @@
         "serve": {
           "executor": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "html:build"
+            "buildTarget": "html:build",
+            "inspect": false
           }
         },
         "lint": {
