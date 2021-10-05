@@ -14,8 +14,13 @@ describe('AppService', () => {
   });
 
   describe('getData', () => {
+    const mockResponse = [
+      { message: 'Take out trash', done: false },
+      { message: 'Continue using Nx', done: false },
+      { message: 'Setup nx and docker', done: true },
+    ];
     it('should return "Welcome to api!"', () => {
-      expect(service.getData()).toEqual({ message: 'Welcome to api!' });
+      expect(service.getData()).toEqual(mockResponse);
     });
   });
 });

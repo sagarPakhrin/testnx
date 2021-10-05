@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=1 origin main
       - run: yarn install
       - run: yarn nx affected --target=test --base=origin/main --parallel
@@ -12,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=1 origin main
       - run: yarn install
       - run: yarn nx affected --target=lint --base=origin/main --parallel
@@ -23,8 +27,11 @@ jobs:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
     steps:
+      - uses: AutoModality/action-clean@v1
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: google-github-actions/setup-gcloud@master
         with:
@@ -35,4 +42,4 @@ jobs:
       - run: |
           gcloud auth configure-docker -q
       - run: yarn install
-      - run: yarn nx affected --base=origin/main --target=deploy --prod --parallel --dockerTag=gcr.io/$PROJECT_ID/ --hash=$(git rev-parse --short "$GITHUB_SHA")
+      - run: yarn nx affected --base=origin/main --target=deploy --prod --dockerTag=gcr.io/${{ secrets.PROJECT_ID }}/ --hash=$(git rev-parse --short "$GITHUB_SHA") --branch=${{ env.BRANCH}}
