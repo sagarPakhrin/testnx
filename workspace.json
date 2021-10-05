@@ -59,7 +59,7 @@
               "nx build api",
               "echo {args.dockerTag}, as argument",
               "docker build -f ./apps/api/Dockerfile -t {args.dockerTag}api:${args.hash} .",
-              "docker push {args.dockerTag}api:${args.hash}"
+              "docker push {args.dockerTag}api"
             ],
             "parallel": false
           }
