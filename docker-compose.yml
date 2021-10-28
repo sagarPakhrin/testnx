@@ -1,12 +1,92 @@
 version: '3.8'
 services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: docker/nginx/Dockerfile
+    links:
+      - api
+      - html
+    ports:
+      - 80:80
+
   html:
-    image: html
+    build:
+      context: ./
+      dockerfile: docker/application/Dockerfile
+      args:
+        - PUID
+        - PGID
+        - EXPOSE_PORT=3000
+        - IS_MAC_HOST
+    working_dir: /var/www/appliflo
+    command: sh -c "npx nx serve html"
     environment:
       - apiPath=http://api:3333
+      - PORT=3000
+    links:
+      - api
+    volumes:
+      - './:/var/www/appliflo'
+      - '/apps/api/'
     ports:
-      - '8080:3334'
+      - '3000:3000'
+
   api:
-    image: api
+    build:
+      context: ./
+      dockerfile: docker/api/Dockerfile
+      args:
+        - PUID
+        - PGID
+        - EXPOSE_PORT=5000
+        - IS_MAC_HOST
+    working_dir: /var/www/appliflo
+    command: sh -c "npx nx serve api"
+    links:
+      - maildev
+      - mysql
+      - redis
+    depends_on:
+      - mysql
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - PORT=5000
+      - NODE_ENV=development
+      - FRONTEND_HOST=*
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=redis-pwd-docker
+      - REDIS_DB=1
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+    volumes:
+      - './:/var/www/appliflo'
+      - '/apps/html/'
     ports:
-      - '8081:3333'
+      - '5000:5000'
+
+  mysql:
+    build:
+      context: docker/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./storage/data/mysql:/var/lib/mysql
+
+  redis:
+    image: redis:5.0-alpine
+    command: redis-server --requirepass redis-pwd-docker
+    ports:
+      - 6379:6379
+
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - 1080:80
